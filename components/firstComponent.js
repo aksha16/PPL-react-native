@@ -1,17 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 
-const FirstCompoenet = () => {
+const FirstComponent = () => {
+    console.log("woeking")
   return (
     <View
       style={{
-        flex: 2,
-        justifyContent: "center",
-        alignItems: "center"
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
-      <Text>Hello, world!</Text>
-      <Text>Oke</Text>
+         
+      <Text>Hello, world, FirstCompoenet!</Text>
     </View>
-  )
-}
-export default FirstCompoenet;
+  );
+};
+export default FirstComponent;
