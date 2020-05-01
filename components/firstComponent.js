@@ -1,8 +1,8 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button} from 'react-native';
 
-const FirstComponent = () => {
-    console.log("woeking")
+const FirstComponent = ({navigation}) => {
+  console.log('working', navigation);
   return (
     <View
       style={{
@@ -10,8 +10,13 @@ const FirstComponent = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-         
-      <Text>Hello, world, FirstCompoenet!</Text>
+      <Text>Hello World! FirstComponent!</Text>
+      <Button
+        title="Go to Second"
+        onPress={() => {
+          navigation.navigate('Second');
+        }}
+      />
     </View>
   );
 };

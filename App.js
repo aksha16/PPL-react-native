@@ -1,20 +1,21 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {Text, View} from 'react-native';
-import FirstComponent from './components/firstComponent';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native'
 
+import FirstComponent from './components/firstComponent';
+import SecondComponent from './components/secondComponent';
+
+const Stack = createStackNavigator();
 const App = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>Hello, world!!!</Text>
-      <FirstComponent />
-        
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="First">
+        <Stack.Screen name="First" component={FirstComponent} />
+        <Stack.Screen name="Second" component={SecondComponent} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 export default App;

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button} from 'react-native';
 
-const SecondComponent = () => {
+const SecondComponent = ({navigation}) => {
   return (
     <View
       style={{
@@ -10,6 +10,13 @@ const SecondComponent = () => {
         alignItems: 'center',
       }}>
       <Text>Hello, world, SecondComponent!</Text>
+      <Button
+        title="go to First"
+        onPress={() => {
+          navigation.navigate('First');
+          //navigation.goBack()
+        }}
+      />
     </View>
   );
 };
