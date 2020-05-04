@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, View, Button, Image, TouchableHighlight} from 'react-native';
 
 const FirstComponent = ({navigation}) => {
   console.log('working', navigation);
@@ -10,11 +10,15 @@ const FirstComponent = ({navigation}) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text>Hello World! FirstComponent!</Text>
+      <Image source={require('../images/logo.png')} />
+      <TouchableHighlight style={{backgroundColor:'red'}}>
+        <Text>Hello World! FirstComponent!</Text>
+      </TouchableHighlight>
+
       <Button
-        title="Go to Second"
+        title="Go to Registration"
         onPress={() => {
-          navigation.navigate('Second');
+          navigation.navigate('Registration');
         }}
       />
     </View>
