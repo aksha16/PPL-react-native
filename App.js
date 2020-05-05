@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import FirstComponent from './components/firstComponent';
 import SecondComponent from './components/secondComponent';
 import Registration from './components/registration';
+import Login from './components/Login';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -16,13 +17,13 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{header: () => null}}
-          initialRouteName="First">
+          initialRouteName="Login">
           <Stack.Screen
-            options={{headerTitle: 'FirstSign'}}
-            name="First"
-            component={FirstComponent}
+            options={{headerTitle: 'Login'}}
+            name="Login"
+            component={Login}
           />
-          <Stack.Screen name="Second" component={SecondComponent} />
+          {/* <Stack.Screen name="Second" component={SecondComponent} /> */}
           <Stack.Screen name="Registration" component={Registration} />
         </Stack.Navigator>
       </NavigationContainer>
