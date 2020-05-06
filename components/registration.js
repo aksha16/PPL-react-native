@@ -16,16 +16,33 @@ const Registration = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
+  const [validation, setValidation] = useState({email: '', password: ''});
 
   const handleSignup = () => {
     if (username && email && password && firstname && lastname) {
-      alert('Sign is done!!!');
-      navigation.navigate('Login');
-    } else {
+      const emailRe = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if (emailRe.test(email) === false) {
+        setValidation({...validation, email: 'wrong'});
+        console.log('Is this work??', validation.email);
+      } else setValidation({...validation, email: ''});
+      const passRe = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      if (passRe.test(password) === false) {
+        setValidation({...validation, password: 'wrong'});
+      } else setValidation({...validation, password: ''});
       console.log(
         'data are',
-        username, email, password, firstname, lastname
+        username,
+        email,
+        password,
+        firstname,
+        lastname,
+        emailRe.test(email),
+        validation,
       );
+      //alert('Sign is done!!!');
+      //navigation.navigate('Login');
+    } else {
+      console.log('data are', username, email, password, firstname, lastname);
       alert('Required all data!!');
     }
   };
@@ -56,6 +73,13 @@ const Registration = ({navigation}) => {
             name="email"
             value={email}
           />
+          {validation.email === 'wrong' ? (
+            <Text style={{color: 'red'}}>
+              Enter Right Mail like As <Text> Example@gmail.com</Text>
+            </Text>
+          ) : (
+            <></>
+          )}
           <Text>Password</Text>
           <TextInput
             style={styles.textInput}
@@ -65,6 +89,13 @@ const Registration = ({navigation}) => {
             name="password"
             value={password}
           />
+          {validation.password === 'wrong' ? (
+            <Text style={{color: 'red'}}>
+              Try Another PassWord like As Example@123
+            </Text>
+          ) : (
+            <></>
+          )}
           <Text>Firstname</Text>
           <TextInput
             style={styles.textInput}
@@ -91,11 +122,14 @@ const Registration = ({navigation}) => {
             </TouchableHighlight>
           </View>
           <View>
+            <View style={{flexDirection:'column', justifyContent:'space-around'}}>
             <TouchableHighlight onPress={() => navigation.navigate('Login')}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>GoToLogin</Text>
               </View>
             </TouchableHighlight>
+            <Text>Already have a account</Text>
+            </View>
           </View>
         </View>
       </View>
