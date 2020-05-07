@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import {
   Text,
   View,
@@ -39,7 +40,24 @@ const Registration = ({navigation}) => {
         emailRe.test(email),
         validation,
       );
-      //alert('Sign is done!!!');
+      const user = {
+        username: username,
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+      };
+      alert('chal bhi raha hai kuch');
+      axios
+        .post('http://192.168.1.11:3002/user/registration', user)
+        .then(res => {
+          console.log('server Registration response', res);
+          alert('Sign is done!!!');
+        })
+        .catch(err => {
+          alert(err, 'login catch axios');
+        });
+
       //navigation.navigate('Login');
     } else {
       console.log('data are', username, email, password, firstname, lastname);
@@ -122,13 +140,14 @@ const Registration = ({navigation}) => {
             </TouchableHighlight>
           </View>
           <View>
-            <View style={{flexDirection:'column', justifyContent:'space-around'}}>
-            <TouchableHighlight onPress={() => navigation.navigate('Login')}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>GoToLogin</Text>
-              </View>
-            </TouchableHighlight>
-            <Text>Already have a account</Text>
+            <View
+              style={{flexDirection: 'column', justifyContent: 'space-around'}}>
+              <TouchableHighlight onPress={() => navigation.navigate('Login')}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>GoToLogin</Text>
+                </View>
+              </TouchableHighlight>
+              <Text>Already have a account</Text>
             </View>
           </View>
         </View>

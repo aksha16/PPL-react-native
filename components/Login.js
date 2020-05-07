@@ -9,13 +9,37 @@ import {
 } from 'react-native';
 import styles from '../styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    alert('log-In');
+    if(email && password){
+      const userData = {email:email, password:password};
+      console.log("userDattttaaa", userData);
+      const storeData = async () =>{
+        try{
+          await AsyncStorage.setItem('userData', JSON.stringify(userData));
+        } catch(err){
+          console.log("Async errors", err);
+        }
+      }
+      const getData = async () => {
+        try{
+          const value = await AsyncStorage.getItem('userData');
+          console.log("Lets see", value)
+          alert('log-In');
+        }catch(err){
+          console.log("Async error", err);
+        }
+      }
+      storeData();
+      getData(); 
+   
+    }
+    else alert("Require all data!!");
   };
   return (
     <ScrollView>
