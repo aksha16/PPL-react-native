@@ -18,6 +18,7 @@ const Registration = ({navigation}) => {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [validation, setValidation] = useState({email: '', password: ''});
+  const [emailExistMsg, setEmailExistMsg] = useState('');
 
   const handleSignup = () => {
     if (username && email && password && firstname && lastname) {
@@ -47,18 +48,24 @@ const Registration = ({navigation}) => {
         firstname: firstname,
         lastname: lastname,
       };
-      alert('chal bhi raha hai kuch');
       axios
         .post('http://192.168.1.11:3002/user/registration', user)
         .then(res => {
           console.log('server Registration response', res);
-          alert('Sign is done!!!');
+          if (res.data) {
+            setEmailExistMsg('Email already exists....');
+          } else {
+            setEmailExistMsg('');
+            alert('Sign is done!!Login-Now');
+            navigation.navigate("Login");
+            
+          }
         })
         .catch(err => {
           alert(err, 'login catch axios');
         });
 
-      //navigation.navigate('Login');
+      
     } else {
       console.log('data are', username, email, password, firstname, lastname);
       alert('Required all data!!');
@@ -83,7 +90,13 @@ const Registration = ({navigation}) => {
             name="username"
             value={username}
           />
+          
           <Text>Email</Text>
+          {emailExistMsg ? (
+            <Text style={{color: 'red'}}>{emailExistMsg}</Text>
+          ) : (
+            <></>
+          )}
           <TextInput
             style={styles.textInput}
             placeholder="Email"

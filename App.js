@@ -7,13 +7,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import FirstComponent from './components/firstComponent';
 import SecondComponent from './components/secondComponent';
 import Registration from './components/registration';
-import Login from './components/Login';
+import Login from './components/login';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 const App = () => {
+  const clearAsyncStorage = async () => {
+    AsyncStorage.clear();
+  };
+  clearAsyncStorage();
   return (
     <>
-      <Text style={styles.ppl}>PPL</Text>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{header: () => null}}
