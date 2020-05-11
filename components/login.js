@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -59,11 +59,29 @@ const Login = ({navigation}) => {
             });
           alert('login is done');
         } else {
+          console.log("Wrong credential!!!")
           setLogInErrorMsg('Wrong Credentials!!');
         }
       });
     } else alert('Require all data!!');
   };
+
+  const fetchData = async () => {
+    try {
+      await AsyncStorage.getItem('token').then(value => {
+        if (value) {
+          navigation.navigate('timeline');
+          setUserData(JSON.parse(value));
+        } else {
+          setUserData();
+        }
+      });
+    } catch (error) {}
+  };
+  useEffect(()=> {
+    fetchData();
+  }, [token]);
+
 
   return (
     <ScrollView>
@@ -140,4 +158,4 @@ const App1 = () => {
 }
 
 
-export default Login;
+export default App1;
