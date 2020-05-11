@@ -15,7 +15,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
+//import {useDispatch} from 'react-redux';
 import {userAction} from '../redux/action';
 import FirstComponent from './firstComponent';
 
@@ -25,7 +25,7 @@ const Login = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [logInErrorMsg, setLogInErrorMsg] = useState('');
   const [token, setToken] = useState();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const handleLogin = () => {
     if (email && password) {
@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
               console.log('jwtVerified?', res);
               if (res.data) {
                 console.log('jwtverify', res.data);
-                dispatch(userAction(res.data.payload));
+                //dispatch(userAction(res.data.payload));
               }
             });
           alert('login is done');
@@ -71,9 +71,9 @@ const Login = ({navigation}) => {
       await AsyncStorage.getItem('token').then(value => {
         if (value) {
           navigation.navigate('timeline');
-          setUserData(JSON.parse(value));
+          setToken(JSON.parse(value));
         } else {
-          setUserData();
+          setToken();
         }
       });
     } catch (error) {}

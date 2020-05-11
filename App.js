@@ -18,10 +18,11 @@ const App = () => {
   clearAsyncStorage();
   return (
     <>
+      <Text>Hahahaaah</Text>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{header: () => null}}
-          initialRouteName="Login">
+          initialRouteName="Registration">
           <Stack.Screen
             options={{headerTitle: 'Login'}}
             name="Login"
