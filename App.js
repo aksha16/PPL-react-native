@@ -9,20 +9,22 @@ import SecondComponent from './components/secondComponent';
 import Registration from './components/registration';
 import Login from './components/login';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 const App = () => {
-  const clearAsyncStorage = async () => {
-    AsyncStorage.clear();
-  };
-  clearAsyncStorage();
+  // const clearAsyncStorage = async () => {
+  //   AsyncStorage.clear();
+  // };
+  // clearAsyncStorage();
+  const user= useSelector(state => state.userData);
+  console.log("userrrr data has arrived yet or not", user,"let's see...")
   return (
     <>
-      <Text>Hahahaaah</Text>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{header: () => null}}
-          initialRouteName="Registration">
+          initialRouteName="Login">
           <Stack.Screen
             options={{headerTitle: 'Login'}}
             name="Login"

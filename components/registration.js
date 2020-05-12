@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import styles from '../styles';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, State} from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 const Registration = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -19,6 +20,8 @@ const Registration = ({navigation}) => {
   const [lastname, setLastname] = useState('');
   const [validation, setValidation] = useState({email: '', password: ''});
   const [emailExistMsg, setEmailExistMsg] = useState('');
+  const userInregist = useSelector(state => state.userData);
+  console.log("regiuserdata", userInregist, "let's have a look!!!!")
 
   const handleSignup = () => {
     if (username && email && password && firstname && lastname) {

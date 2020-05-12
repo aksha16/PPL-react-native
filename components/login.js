@@ -15,7 +15,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-//import {useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {userAction} from '../redux/action';
 import FirstComponent from './firstComponent';
 
@@ -25,13 +25,13 @@ const Login = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [logInErrorMsg, setLogInErrorMsg] = useState('');
   const [token, setToken] = useState();
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     if (email && password) {
       const userData = {email: email, password: password};
       console.log('userDattttaaa', userData);
-      axios.post('http://192.168.1.11:3002/user/login', user).then(res => {
+      axios.post('http://192.168.1.11:3002/user/login', userData).then(res => {
         console.log('res:', res);
         if (res.data.token) {
           console.log('user can log-in!!', res.data);
@@ -54,12 +54,12 @@ const Login = ({navigation}) => {
               console.log('jwtVerified?', res);
               if (res.data) {
                 console.log('jwtverify', res.data);
-                //dispatch(userAction(res.data.payload));
+                dispatch(userAction(res.data.payload));
               }
             });
           alert('login is done');
         } else {
-          console.log("Wrong credential!!!")
+          console.log('Wrong credential!!!');
           setLogInErrorMsg('Wrong Credentials!!');
         }
       });
@@ -70,18 +70,21 @@ const Login = ({navigation}) => {
     try {
       await AsyncStorage.getItem('token').then(value => {
         if (value) {
+          console.log(value,"vallllllllluuuuuueeeee");
+          setToken(value);
           navigation.navigate('timeline');
-          setToken(JSON.parse(value));
         } else {
           setToken();
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log('errrrrr', error);
+    }
   };
-  useEffect(()=> {
+  useEffect(() => {
+    console.log("is this useEffect working????")
     fetchData();
   }, [token]);
-
 
   return (
     <ScrollView>
@@ -98,7 +101,7 @@ const Login = ({navigation}) => {
           ) : (
             <></>
           )}
-          <Text>Email</Text>
+          <Text>Email</Text>      
           <TextInput
             style={styles.textInput}
             placeholder="Email"
@@ -146,16 +149,15 @@ const Login = ({navigation}) => {
     </ScrollView>
   );
 };
-const Stack =createStackNavigator();
+const Stack = createStackNavigator();
 
-const App1 = () => {
-  return(
-    <Stack.Navigator initialRouteName='Login' screenOptions={{header:false}}>
-      <Stack.Screen name='Login' component={Login} />
-      <Stack.Screen name='timeline' component={FirstComponent} />
+const App1 = props => {
+  return (
+    <Stack.Navigator initialRouteName="Login" screenOptions={{header: false}}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="timeline" component={FirstComponent} />
     </Stack.Navigator>
-  )
-}
-
+  );
+};
 
 export default App1;
