@@ -72,7 +72,7 @@ const Login = ({navigation}) => {
         if (value) {
           console.log(value,"vallllllllluuuuuueeeee");
           setToken(value);
-          navigation.navigate('timeline');
+          //navigation.navigate('timeline');
         } else {
           setToken();
         }
@@ -160,4 +160,4 @@ const App1 = props => {
   );
 };
 
-export default App1;
+export default Login;

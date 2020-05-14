@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -9,7 +9,9 @@ import SecondComponent from './components/secondComponent';
 import Registration from './components/registration';
 import Login from './components/login';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useSelector } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import Timeline from './components/timeline';
+import axios from 'axios';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -17,22 +19,74 @@ const App = () => {
   //   AsyncStorage.clear();
   // };
   // clearAsyncStorage();
-  const user= useSelector(state => state.userData);
-  console.log("userrrr data has arrived yet or not", user,"let's see...")
+  const dispatch = useDispatch();
+  const [isSignedIn, setSignedIn] = useState(false);
+  const [user, setUser] = useState({});
+  // const user = useSelector(state => state.userData);
+  console.log('userrrr data has arrived yet or not', user, "let's see...");
+
+  useEffect(() => {
+    const tokenVerify = async () => {
+      try {
+        await AsyncStorage.getItem('token').then(value => {
+          if (value) {
+            const token = value;
+            axios
+              .post('http://192.168.1.11:3002/user/jwtverify', {token: token})
+              .then(res => {
+                console.log('jwtVerified kya', res);
+                if (res.data.payload) {
+                  dispatch(userAction(res.data.payload));
+                  const user = useSelector(state => state.userData);
+                  setSignedIn(true);
+                  setUser(user);
+                  console.log("userrrrrrrrrrr", user);
+                }
+                else console.log("woreddddddd")
+              });
+          }
+        });
+      } catch (error) {
+        console.log('errrrrr', error);
+      }
+    };
+    tokenVerify();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setSignedIn(true);
+      console.log('worked???', isSignedIn);
+    }
+  }, [user]);
+
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{header: () => null}}
-          initialRouteName="Login">
-          <Stack.Screen
-            options={{headerTitle: 'Login'}}
-            name="Login"
-            component={Login}
-          />
-          {/* <Stack.Screen name="Second" component={SecondComponent} /> */}
-          <Stack.Screen name="Registration" component={Registration} />
-        </Stack.Navigator>
+        {console.log('isSignedIn', isSignedIn)}
+        {isSignedIn ? (
+          <Stack.Navigator>
+            <Stack.Screen
+              name="timeline"
+              options={{
+                title: 'PPL',
+                headerStyle: {backgroundColor: '#f4511e'},
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+              component={Timeline}
+            />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator
+            screenOptions={{header: () => null}}
+            initialRouteName="Login">
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Registration" component={Registration} />
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </>
   );
