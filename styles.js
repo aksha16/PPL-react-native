@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
   },
   mainWord:{
     fontSize: 30,
-    color: '#ffa21d',
+    color: '#f4511e',
     alignSelf: 'center',
     fontWeight: 'bold',
     borderBottomWidth: 2,
-    borderBottomColor: '#ffa21d',
+    borderBottomColor: '#f4511e',
   },
   autoSuggestion:{
     alignSelf: 'center',

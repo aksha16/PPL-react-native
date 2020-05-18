@@ -15,14 +15,17 @@ import axios from 'axios';
 
 const Stack = createStackNavigator();
 const App = () => {
+
   // const clearAsyncStorage = async () => {
   //   AsyncStorage.clear();
   // };
   // clearAsyncStorage();
+
   const dispatch = useDispatch();
   const [isSignedIn, setSignedIn] = useState(false);
-  const [user, setUser] = useState({});
-  // const user = useSelector(state => state.userData);
+  //const [user, setUser] = useState({});
+  const [token, setToken] = useState();
+  const user = useSelector(state => state.userData);
   console.log('userrrr data has arrived yet or not', user, "let's see...");
 
   useEffect(() => {
@@ -30,19 +33,23 @@ const App = () => {
       try {
         await AsyncStorage.getItem('token').then(value => {
           if (value) {
+            console.log("App.js value of token",value)
             const token = value;
+            setToken(value);
             axios
               .post('http://192.168.1.11:3002/user/jwtverify', {token: token})
               .then(res => {
                 console.log('jwtVerified kya', res);
-                if (res.data.payload) {
-                  dispatch(userAction(res.data.payload));
-                  const user = useSelector(state => state.userData);
+                console.log("achhhaaa aisa kya", res.data.payload);
+                if (res.data.payload != {}) {
+                  //dispatch(userAction(res.data.payload));
+                  //const user = useSelector(state => state.userData);
+                  console.log("workingggggg ??????");
                   setSignedIn(true);
-                  setUser(user);
-                  console.log("userrrrrrrrrrr", user);
+                  //setUser(user);
+                  console.log("userrrrrrrrrrr", isSignedIn);
                 }
-                else console.log("woreddddddd")
+                else console.log("w")
               });
           }
         });
@@ -51,12 +58,16 @@ const App = () => {
       }
     };
     tokenVerify();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
+    console.log("userrrrr", user);
     if (user) {
       setSignedIn(true);
       console.log('worked???', isSignedIn);
+    }
+    else {
+      setSignedIn(false);
     }
   }, [user]);
 

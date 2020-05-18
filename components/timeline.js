@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -14,6 +14,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Profile from './profile';
+import AsyncStorage from '@react-native-community/async-storage';
+import Upload from './upload';
+
 
 function HomeScreen() {
   return (
@@ -73,7 +76,7 @@ const Timeline = () => {
             inactiveTintColor: 'gray',
           }}>
           <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Upload" component={UploadScreen} />
+          <Tab.Screen name="Upload" component={Upload} />
           <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
       </NavigationContainer>
