@@ -16,6 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Profile from './profile';
 import AsyncStorage from '@react-native-community/async-storage';
 import Upload from './upload';
+import Home from './home';
 
 
 function HomeScreen() {
@@ -47,9 +48,9 @@ const Timeline = () => {
   return (
     <>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <ScrollView>
+        {/* <ScrollView>
           <Text>Hi, I'm TimeLine. What's up????</Text>
-        </ScrollView>
+        </ScrollView> */}
       </View>
       <NavigationContainer independent={true}>
         <Tab.Navigator
@@ -75,7 +76,7 @@ const Timeline = () => {
             activeTintColor: '#f4511e',
             inactiveTintColor: 'gray',
           }}>
-          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Upload" component={Upload} />
           <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
