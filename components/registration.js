@@ -52,7 +52,7 @@ const Registration = ({navigation}) => {
         lastname: lastname,
       };
       axios
-        .post('http://192.168.1.11:3002/user/registration', user)
+        .post('http://192.168.43.57:3002/user/registration', user)
         .then(res => {
           console.log('server Registration response', res);
           if (res.data) {

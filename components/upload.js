@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import styles from '../styles';
-import {Dropdown} from 'react-native-material-dropdown';
-import DropDownItem from 'react-native-drop-down-item';
+//import {Dropdown} from 'react-native-material-dropdown';
+//import DropDownItem from 'react-native-drop-down-item';
 import axios from 'axios';
 
 const Upload = () => {
@@ -70,7 +70,7 @@ const Upload = () => {
               placeholder="Enter Category"
               value={category}
             />
-            {allCategory.map((data, i) => {
+            {/* {allCategory.map((data, i) => {
               return (
                 <DropDownItem
                   key={i}
@@ -91,7 +91,7 @@ const Upload = () => {
                   }
                 />
               );
-            })}
+            })} */}
             <Text>Caption</Text>
             <TextInput
               style={styles.textInput}

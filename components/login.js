@@ -31,7 +31,7 @@ const Login = ({navigation}) => {
     if (email && password) {
       const userData = {email: email, password: password};
       console.log('userDattttaaa', userData);
-      axios.post('http://192.168.1.11:3002/user/login', userData).then(res => {
+      axios.post('http://192.168.43.57:3002/user/login', userData).then(res => {
         console.log('res:', res);
         if (res.data.token) {
           console.log('user can log-in!!', res.data);
@@ -47,7 +47,7 @@ const Login = ({navigation}) => {
           const token = res.data.token;
 
           axios
-            .post('http://192.168.1.11:3002/user/jwtverify', {
+            .post('http://192.168.43.57:3002/user/jwtverify', {
               token: token,
             })
             .then(res => {
@@ -151,13 +151,13 @@ const Login = ({navigation}) => {
 };
 const Stack = createStackNavigator();
 
-const App1 = props => {
-  return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{header: false}}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="timeline" component={FirstComponent} />
-    </Stack.Navigator>
-  );
-};
+// const App1 = props => {
+//   return (
+//     <Stack.Navigator initialRouteName="Login" screenOptions={{header: false}}>
+//       <Stack.Screen name="Login" component={Login} />
+//       <Stack.Screen name="timeline" component={FirstComponent} />
+//     </Stack.Navigator>
+//   );
+// };
 
 export default Login;

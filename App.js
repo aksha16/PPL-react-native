@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
 import Timeline from './components/timeline';
 import axios from 'axios';
+import {userAction} from './redux/action';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -23,7 +24,6 @@ const App = () => {
 
   const dispatch = useDispatch();
   const [isSignedIn, setSignedIn] = useState(false);
-  //const [user, setUser] = useState({});
   const [token, setToken] = useState();
   const user = useSelector(state => state.userData);
   console.log('userrrr data has arrived yet or not', user, "let's see...");
@@ -33,23 +33,23 @@ const App = () => {
       try {
         await AsyncStorage.getItem('token').then(value => {
           if (value) {
-            console.log("App.js value of token",value)
-            const token = value;
-            setToken(value);
+            console.log("App.js value of token",value);
+            console.log("ohh that means till here things worked!!")
             axios
-              .post('http://192.168.1.11:3002/user/jwtverify', {token: token})
+              .post('http://192.168.43.57:3002/user/jwtverify', {token: value})
               .then(res => {
                 console.log('jwtVerified kya', res);
                 console.log("achhhaaa aisa kya", res.data.payload);
-                if (res.data.payload != {}) {
-                  //dispatch(userAction(res.data.payload));
-                  //const user = useSelector(state => state.userData);
+                if (true) {
                   console.log("workingggggg ??????");
                   setSignedIn(true);
-                  //setUser(user);
-                  console.log("userrrrrrrrrrr", isSignedIn);
+                  console.log("user signed is?", isSignedIn);
+                  dispatch(userAction(res.data.payload));
+                  console.log("worked.............")
+                  
+                  
                 }
-                else console.log("w")
+                else console.log("Not any payload....")
               });
           }
         });
@@ -58,18 +58,8 @@ const App = () => {
       }
     };
     tokenVerify();
-  }, [token]);
+  }, []);
 
-  useEffect(() => {
-    console.log("userrrrr", user);
-    if (user) {
-      setSignedIn(true);
-      console.log('worked???', isSignedIn);
-    }
-    else {
-      setSignedIn(false);
-    }
-  }, [user]);
 
   return (
     <>
@@ -100,16 +90,9 @@ const App = () => {
         )}
       </NavigationContainer>
     </>
+    // <Text>Yesss</Text>
   );
 };
 
-const styles = StyleSheet.create({
-  ppl: {
-    color: 'orange',
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginLeft: 5,
-  },
-});
 
 export default App;
