@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
     width: 'auto',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffa21d',
+    backgroundColor: '#f4511e',
     margin: 10,
   },
   filterButton: {
     width: 'auto',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffa21d',
+    backgroundColor: '#f4511e',
     margin: 5,
   },
   buttonText: {
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
   post: {
     margin: 10,
     borderTopWidth:2,
-    borderTopColor: '#ffa21d',
+    borderTopColor: '#f4511e',
     zIndex:0
   },
   postHeader: {
     padding: 10,
-    backgroundColor: '#f1eff2',
+    backgroundColor: '#f4511e',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   postIcon: {
     flexDirection: 'row',
-    backgroundColor: '#ffa21d',
+    backgroundColor: '#f4511e',
   },
   Comment:{
     backgroundColor: 'azure',

@@ -52,6 +52,10 @@ const App = () => {
                 else console.log("Not any payload....")
               });
           }
+          else {
+            console.log("async storage got nothing..........");
+            setSignedIn(false);
+          }
         });
       } catch (error) {
         console.log('errrrrr', error);
