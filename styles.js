@@ -126,5 +126,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  text:{
+    color:'#f4511e',
+  }
 });
 export default styles;

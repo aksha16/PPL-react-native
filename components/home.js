@@ -73,7 +73,6 @@ const Home = props => {
     <>
       <ScrollView>
         <View style={styles.container}>
-          {console.log('does pics been updated', pics[0])}
           {pics.map((data, id) => {
             return (
               <View style={styles.post} key={id}>
@@ -188,19 +187,28 @@ const Home = props => {
                     </TouchableHighlight>
                   </View>
                   {addComment.id === data._id && (
-                    <TextInput
-                      style={styles.textInput}
-                      onChangeText={comment => {
-                        setComment(comment);
-                      }}
-                      placeholder="Enter your Comment"
-                      value={comment}
-                      onSubmitEditing={() => handleComment(data._id)}
-                    />
-                    // <View>
-                    //   <TouchableHighlight />
-                    // </View>
-                                                                                       
+                    <>
+                      <TextInput
+                        style={styles.textInput}
+                        onChangeText={comment => {
+                          setComment(comment);
+                        }}
+                        placeholder="Enter your Comment"
+                        value={comment}
+                        onSubmitEditing={() => handleComment(data._id)}
+                      />
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                        }}>
+                        <TouchableHighlight onPress={handleComment}>
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Submit</Text>
+                          </View>
+                        </TouchableHighlight>
+                      </View>
+                    </>
                   )}
                 </View>
               </View>
