@@ -51,7 +51,7 @@ const Profile = ({navigation}) => {
 
   const DrawerIcon = ({navigation}) => {
     return (
-      <View style={{display: 'flex', flexDirection: 'row-reverse'}}>
+      <View style={{display: 'flex', flexDirection: 'row'}}>
         <Icon.Button
           name="reorder"
           backgroundColor="#f4511e"
