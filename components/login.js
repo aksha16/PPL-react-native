@@ -70,7 +70,7 @@ const Login = ({navigation}) => {
     try {
       await AsyncStorage.getItem('token').then(value => {
         if (value) {
-          console.log(value,"vallllllllluuuuuueeeee");
+          console.log(value, 'vallllllllluuuuuueeeee');
           setToken(value);
           //navigation.navigate('timeline');
         } else {
@@ -82,7 +82,7 @@ const Login = ({navigation}) => {
     }
   };
   useEffect(() => {
-    console.log("is this useEffect working????")
+    console.log('is this useEffect working????');
     fetchData();
   }, [token]);
 
@@ -91,17 +91,14 @@ const Login = ({navigation}) => {
       {/* {isLoading ? <ActivityIndicator size="large" color={'black'} /> : <></>} */}
       <View style={styles.container}>
         <View style={styles.login_sec}>
-          <Image
-            style={{width: 200, height: 100, alignSelf: 'center'}}
-            source={require('../images/logo.png')}
-          />
+          <Image style={styleIn.image} source={require('../images/logo.png')} />
           <Text style={styles.mainWord}>Log-in to Account </Text>
           {logInErrorMsg ? (
-            <Text style={{color: 'red'}}>{logInErrorMsg}</Text>
+            <Text style={styleIn.errorMsg}>{logInErrorMsg}</Text>
           ) : (
             <></>
           )}
-          <Text>Email</Text>      
+          <Text>Email</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Email"
@@ -119,7 +116,7 @@ const Login = ({navigation}) => {
             value={password}
           />
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <View style={styleIn.buttons}>
           <View>
             <TouchableHighlight onPress={handleLogin} underlayColor="white">
               <View style={styles.button}>
@@ -127,11 +124,7 @@ const Login = ({navigation}) => {
               </View>
             </TouchableHighlight>
           </View>
-          <View
-            style={{
-              flexDirection: 'column-reverse',
-              justifyContent: 'space-between',
-            }}>
+          <View style={styleIn.button}>
             <View>
               <Text>Do not have Account</Text>
             </View>
@@ -159,5 +152,15 @@ const Stack = createStackNavigator();
 //     </Stack.Navigator>
 //   );
 // };
+
+const styleIn = StyleSheet.create({
+  image: {width: 200, height: 100, alignSelf: 'center'},
+  errorMsg: {color: 'red'},
+  buttons: {flexDirection: 'row', justifyContent: 'space-around'},
+  button: {
+    flexDirection: 'column-reverse',
+    justifyContent: 'space-between',
+  },
+});
 
 export default Login;

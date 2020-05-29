@@ -18,14 +18,16 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Comments from './comments';
 
+const dimensions = Dimensions.get('window');
+const imageHeight = Math.round((dimensions.width * 12) / 16);
+const imageWidth = dimensions.width - 2;
+
 const Home = ({navigation}) => {
   const [pics, setPics] = useState([]);
   const [picsCopy, setPicsCopy] = useState([]);
   const picsrc = '/home/com122/Desktop/ppl/clientSide/public/uploadPics/';
   const a = [1, 2, 3, 4, 5, 6, 7];
-  const dimensions = Dimensions.get('window');
-  const imageHeight = Math.round((dimensions.width * 12) / 16);
-  const imageWidth = dimensions.width - 2;
+
   const user = useSelector(state => state.userData);
   const [comment, setComment] = useState('');
   const [addComment, setAddComment] = useState({id: ''});
@@ -96,18 +98,19 @@ const Home = ({navigation}) => {
 
   const AllComments = () => {
     return (
-      <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          <Stack.Screen name="comments" component={Comments} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="comments" component={Comments} />
+      </Stack.Navigator>
     );
   };
 
   return (
     <>
       <ScrollView>
-        <AllComments />
+        <Stack.Navigator>
+          <Stack.Screen name="comments" component={Comments} />
+        </Stack.Navigator>
+
         <View style={styles.container}>
           {pics.map((data, id) => {
             return (
@@ -117,14 +120,14 @@ const Home = ({navigation}) => {
                     <View style={styles.postIcon}>
                       <View>
                         <Image
-                          style={{width: 20, height: 20}}
+                          style={styleIn.postIcon}
                           source={{
                             uri: 'http://192.168.43.57:3002/images/img_6.png',
                           }}
                         />
                       </View>
                       <View>
-                        <Text style={{color: 'white', paddingHorizontal: 10}}>
+                        <Text style={styleIn.name}>
                           {' '}
                           {data.postedBy.firstname +
                             ' ' +
@@ -133,21 +136,12 @@ const Home = ({navigation}) => {
                       </View>
                     </View>
                     <View>
-                      <Text style={{fontSize: 20, color: '#f4511e'}}>
-                        {data.caption}
-                      </Text>
+                      <Text style={styleIn.caption}>{data.caption}</Text>
                     </View>
                   </View>
                   <View style={styles.postRight}>
                     <View>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          backgroundColor: '#f4511e',
-                          padding: 5,
-                        }}>
-                        {data.category}
-                      </Text>
+                      <Text style={styleIn.category}>{data.category}</Text>
                     </View>
                     <View>
                       <Text>{data.date}</Text>
@@ -156,7 +150,7 @@ const Home = ({navigation}) => {
                 </View>
                 <View>
                   <Image
-                    style={{width: imageWidth, height: imageHeight}}
+                    style={styleIn.image}
                     source={{
                       uri: `http://192.168.43.57:3002/uploadPics/${data.image}`,
                     }}
@@ -165,20 +159,6 @@ const Home = ({navigation}) => {
 
                 <View>
                   <View style={styles.postHeader}>
-                    <View style={styles.postIcon}>
-                      <View>
-                        <Image
-                          style={{width: 20, height: 20}}
-                          source={{
-                            uri:
-                              'http://192.168.43.248:9000/images/icon_001.png',
-                          }}
-                        />
-                      </View>
-                      <View>
-                        <Text style={{color: 'white'}}> Share </Text>
-                      </View>
-                    </View>
                     <TouchableHighlight
                       onPress={() => {
                         handleLikes(data._id);
@@ -186,7 +166,7 @@ const Home = ({navigation}) => {
                       <View style={styles.postIcon}>
                         <View>
                           <Image
-                            style={{width: 20, height: 20}}
+                            style={styleIn.postIcon}
                             source={{
                               uri:
                                 'http://192.168.43.248:9000/images/icon_003.png',
@@ -206,7 +186,7 @@ const Home = ({navigation}) => {
                       <View style={styles.postIcon}>
                         <View>
                           <Image
-                            style={{width: 20, height: 20}}
+                            style={styleIn.postIcon}
                             source={{
                               uri:
                                 'http://192.168.43.248:9000/images/icon_004.png',
@@ -223,20 +203,10 @@ const Home = ({navigation}) => {
                     </TouchableHighlight>
                   </View>
                   <View>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: '#f4511e',
-                        padding: 5,
-                        fontWeight: 'bold',
-                      }}>
-                      Comments
-                    </Text>
+                    <Text style={styleIn.commentHeader}>Comments</Text>
                     {data.comments.slice(0, 2).map((commentItem, id) => {
                       return (
-                        <Text
-                          style={{fontWeight: 'bold', fontSize: 15}}
-                          key={id}>
+                        <Text style={styleIn.comments} key={commentItem._id}>
                           {commentItem.commentedBy.firstname +
                             ' ' +
                             commentItem.commentedBy.lastname}{' '}
@@ -247,16 +217,20 @@ const Home = ({navigation}) => {
                         </Text>
                       );
                     })}
-                    
-                    {/* <View>
-                      <TouchableHighlight
-                        onPress={() => {
-                          navigation.naviagte('comments');
-                        }}>
-                        {' '}
-                        <Text>View all {data.comments.length} comments</Text>
-                      </TouchableHighlight>
-                    </View> */}
+                    {data.comments.length > 0 ? (
+                      <View>
+                        <Text
+                          style={{color: 'blue'}}
+                          onPress={() => {
+                            navigation.navigate('Home', {Screen: 'comments'});
+                            console.log('clicked???');
+                          }}>
+                          View all {data.comments.length} comments
+                        </Text>
+                      </View>
+                    ) : (
+                      <></>
+                    )}
                   </View>
 
                   {addComment.id === data._id && (
@@ -266,14 +240,13 @@ const Home = ({navigation}) => {
                         onChangeText={comment => {
                           setComment(comment);
                         }}
+                        onSubmitEditing={comment => {
+                          setComment(comment);
+                        }}
                         placeholder="Enter your Comment"
                         value={comment}
                       />
-                      <View
-                        style={{
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                        }}>
+                      <View style={styleIn.handleComment}>
                         <TouchableHighlight
                           onPress={() => handleComment(data._id)}>
                           <View style={styles.button}>
@@ -292,4 +265,28 @@ const Home = ({navigation}) => {
     </>
   );
 };
+
+const styleIn = StyleSheet.create({
+  postIcon: {width: 20, height: 20},
+  name: {color: 'white', paddingHorizontal: 10},
+  caption: {fontSize: 20, color: '#f4511e'},
+  category: {
+    fontSize: 20,
+    backgroundColor: '#f4511e',
+    padding: 5,
+  },
+  image: {width: imageWidth, height: imageHeight},
+  commentHeader: {
+    fontSize: 18,
+    color: '#f4511e',
+    padding: 5,
+    fontWeight: 'bold',
+  },
+  comments: {fontWeight: 'bold', fontSize: 15},
+  handleComment: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+});
+
 export default Home;

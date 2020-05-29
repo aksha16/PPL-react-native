@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -18,30 +18,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Upload from './upload';
 import Home from './home';
 
-
-function HomeScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function ProfileScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>wooohooooo Profile!</Text>
-    </View>
-  );
-}
-const UploadScreen = () => {
-  return(
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Upload!</Text>
-    </View>
-  )
-}
-
 const Tab = createBottomTabNavigator();
 
 const Timeline = () => {
@@ -59,13 +35,13 @@ const Timeline = () => {
               let iconName;
 
               if (route.name === 'Home') {
-                iconName = focused
-                  ? 'ios-home'
-                  : 'ios-home';
+                iconName = focused ? 'ios-home' : 'ios-home';
               } else if (route.name === 'Upload') {
-                iconName = focused ? 'ios-add-circle' : 'ios-add-circle-outline';
-              } else if (route.name==='Profile'){
-                iconName= focused ? 'md-person' : 'md-person'
+                iconName = focused
+                  ? 'ios-add-circle'
+                  : 'ios-add-circle-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused ? 'md-person' : 'md-person';
               }
 
               // You can return any component that you like here!

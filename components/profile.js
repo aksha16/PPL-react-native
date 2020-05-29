@@ -51,7 +51,7 @@ const Profile = ({navigation}) => {
 
   const DrawerIcon = ({navigation}) => {
     return (
-      <View style={{display: 'flex', flexDirection: 'row'}}>
+      <View style={styleIn.drawerIcon}>
         <Icon.Button
           name="reorder"
           backgroundColor="#f4511e"
@@ -79,7 +79,7 @@ const Profile = ({navigation}) => {
 
         <View style={{alignItems: 'center'}}>
           <Image
-            style={{width: 100, height: 100}}
+            style={styleIn.image}
             source={require('../images/img_6.png')}
           />
         </View>
@@ -87,22 +87,17 @@ const Profile = ({navigation}) => {
           <View>
             <View>
               <Text
-                style={{fontSize: 20, fontWeight: 'bold', color: '#f4511e'}}>
+                style={styleIn.name}>
                 FirstName : {user.userData.firstname}
               </Text>
               <Text
-                style={{fontSize: 20, fontWeight: 'bold', color: '#f4511e'}}>
+                style={styleIn.name}>
                 LastName : {user.userData.lastname}
               </Text>
             </View>
             <View>
               <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: '#f4511e',
-                  fontStyle: 'italic',
-                }}>
+                style={styleIn.bio}>
                 Bio :
               </Text>
             </View>
@@ -119,4 +114,18 @@ const Profile = ({navigation}) => {
     </>
   );
 };
+
+const styleIn = StyleSheet.create({
+  drawerIcon:{display: 'flex', flexDirection: 'row'},
+  image:{width: 100, height: 100},
+  name:{fontSize: 20, fontWeight: 'bold', color: '#f4511e'},
+  bio:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#f4511e',
+    fontStyle: 'italic',
+  }
+
+});
+
 export default Profile;

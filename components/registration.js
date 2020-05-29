@@ -7,10 +7,11 @@ import {
   Button,
   TextInput,
   TouchableHighlight,
+  StyleSheet,
 } from 'react-native';
 import styles from '../styles';
 import {ScrollView, State} from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const Registration = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -21,7 +22,7 @@ const Registration = ({navigation}) => {
   const [validation, setValidation] = useState({email: '', password: ''});
   const [emailExistMsg, setEmailExistMsg] = useState('');
   const userInregist = useSelector(state => state.userData);
-  console.log("regiuserdata", userInregist, "let's have a look!!!!")
+  console.log('regiuserdata', userInregist, "let's have a look!!!!");
 
   const handleSignup = () => {
     if (username && email && password && firstname && lastname) {
@@ -60,15 +61,12 @@ const Registration = ({navigation}) => {
           } else {
             setEmailExistMsg('');
             alert('Sign is done!!Login-Now');
-            navigation.navigate("Login");
-            
+            navigation.navigate('Login');
           }
         })
         .catch(err => {
           alert(err, 'login catch axios');
         });
-
-      
     } else {
       console.log('data are', username, email, password, firstname, lastname);
       alert('Required all data!!');
@@ -80,7 +78,7 @@ const Registration = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.login_sec}>
           <Image
-            style={{width: 200, height: 100, alignSelf: 'center'}}
+            style={styleIn.image}
             source={require('../images/logo.png')}
           />
           <Text style={styles.mainWord}>Create an Account </Text>
@@ -93,7 +91,7 @@ const Registration = ({navigation}) => {
             name="username"
             value={username}
           />
-          
+
           <Text>Email</Text>
           {emailExistMsg ? (
             <Text style={{color: 'red'}}>{emailExistMsg}</Text>
@@ -147,7 +145,7 @@ const Registration = ({navigation}) => {
             value={lastname}
           />
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <View style={styleIn.buttons}>
           <View>
             <TouchableHighlight onPress={handleSignup} underlayColor="white">
               <View style={styles.button}>
@@ -157,7 +155,7 @@ const Registration = ({navigation}) => {
           </View>
           <View>
             <View
-              style={{flexDirection: 'column', justifyContent: 'space-around'}}>
+              style={styleIn.button}>
               <TouchableHighlight onPress={() => navigation.navigate('Login')}>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}>GoToLogin</Text>
@@ -171,5 +169,12 @@ const Registration = ({navigation}) => {
     </ScrollView>
   );
 };
+
+const styleIn = StyleSheet.create({
+  image: {width: 200, height: 100, alignSelf: 'center'},
+  buttons : {flexDirection: 'row', justifyContent: 'space-around'},
+  button : {flexDirection: 'column', justifyContent: 'space-around'}
+
+});
 
 export default Registration;

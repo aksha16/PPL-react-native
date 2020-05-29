@@ -57,13 +57,14 @@ const Upload = ({navigation}) => {
       formData.append('image', photo.uri);
       formData.append('caption', caption);
       formData.append('category', category);
-      axios.post('http://192.168.43.57:3002/post/upload', formData).then(res => {
-        console.log("resUploadData", res.data);
-        setCaption('');
-        setCategory('');
-        setPhoto([]);
-
-      })
+      axios
+        .post('http://192.168.43.57:3002/post/upload', formData)
+        .then(res => {
+          console.log('resUploadData', res.data);
+          setCaption('');
+          setCategory('');
+          setPhoto([]);
+        });
       alert('Upload is done');
       //navigation.navigate('Home');
     } else alert('Required all data field!!');
@@ -71,13 +72,7 @@ const Upload = ({navigation}) => {
 
   return (
     <ScrollView>
-      {console.log(
-        'categories been pdated pr not??',
-        allCategory,
-        photo,
-        photo.uri,
-      )}
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styleIn.container}>
         <View>
           <Text style={styles.mainWord}>UploadPost</Text>
           <Text style={styles.text}>Category</Text>
@@ -100,7 +95,7 @@ const Upload = ({navigation}) => {
           {photo.uri && (
             <Image
               source={{uri: photo.uri}}
-              style={{width: 60, height: 60, alignSelf: 'center'}}
+              style={styleIn.uploadImage}
             />
           )}
           <Text> </Text>
@@ -125,4 +120,9 @@ const Upload = ({navigation}) => {
   );
 };
 
+const styleIn = StyleSheet.create({
+  container:{flex: 1, alignItems: 'center', justifyContent: 'center'},
+  uploadImage:{width: 60, height: 60, alignSelf: 'center'}
+
+})
 export default Upload;
