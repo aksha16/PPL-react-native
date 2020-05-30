@@ -24,9 +24,6 @@ const Timeline = () => {
   return (
     <>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        {/* <ScrollView>
-          <Text>Hi, I'm TimeLine. What's up????</Text>
-        </ScrollView> */}
       </View>
       <NavigationContainer independent={true}>
         <Tab.Navigator
