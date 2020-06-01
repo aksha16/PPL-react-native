@@ -17,7 +17,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../redux/action';
-import FirstComponent from './firstComponent';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -142,16 +141,6 @@ const Login = ({navigation}) => {
     </ScrollView>
   );
 };
-const Stack = createStackNavigator();
-
-// const App1 = props => {
-//   return (
-//     <Stack.Navigator initialRouteName="Login" screenOptions={{header: false}}>
-//       <Stack.Screen name="Login" component={Login} />
-//       <Stack.Screen name="timeline" component={FirstComponent} />
-//     </Stack.Navigator>
-//   );
-// };
 
 const styleIn = StyleSheet.create({
   image: {width: 200, height: 100, alignSelf: 'center'},

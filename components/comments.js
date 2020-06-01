@@ -31,11 +31,11 @@ const Comments = ({route, navigation}) => {
 
   return (
     <>
-      {console.log('lets see', singlePostComments.comments)}{' '}
-      <ScrollView>
+      {console.log('lets see', singlePostComments.comments)};
+      {/* <ScrollView> */}
         <View>
           <Text style={styleIn.commentHeader}>Comments</Text>
-          {singlePostComments.comments.map((commentItem, id) => {
+          {/* {singlePostComments.comments.map((commentItem, id) => {
             return (
               <Text style={styleIn.comments} key={commentItem._id}>
                 {commentItem.commentedBy.firstname +
@@ -47,10 +47,10 @@ const Comments = ({route, navigation}) => {
                 </Text>
               </Text>
             );
-          })}
+          })} */}
         </View>
-      </ScrollView>
-      <Text>Ahahah</Text>
+      {/* </ScrollView> */}
+{/* <Text>Ahahah </Text> */}
     </>
   );
 };
