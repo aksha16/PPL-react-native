@@ -11,46 +11,48 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
-import Styles from '../styles';
+import SERVER_URL from '../config';
 
 const Comments = ({route, navigation}) => {
   const {_id} = route.params;
-  const [singlePostComments, setSinglePostComments] = useState([]);
-  console.log('=======>>>>>>>>>>>', route, navigation);
+  const [singlePostComments, setSinglePostComments] = useState({});
+  const [ifLoading, setIfLoading] = useState(true);
+  console.log('=======>>>>>>>>>>> it came here////');
 
   useEffect(() => {
+    console.log('problem is here???');
+
     axios
-      .post('http://192.168.43.57:3002/post/singlePost', {
+      .post( SERVER_URL + 'post/singlePost', {
         id: _id,
       })
       .then(res => {
         console.log('single post comments are', res.data);
         setSinglePostComments(res.data);
+        setIfLoading(false);
       });
   }, []);
-
+  
+if(ifLoading){
+  return(
+    <ActivityIndicator></ActivityIndicator>
+  )
+}
   return (
     <>
-      {console.log('lets see', singlePostComments.comments)};
-      {/* <ScrollView> */}
+      <ScrollView>
         <View>
           <Text style={styleIn.commentHeader}>Comments</Text>
-          {/* {singlePostComments.comments.map((commentItem, id) => {
+          {singlePostComments.comments.map((item, id) => {
             return (
-              <Text style={styleIn.comments} key={commentItem._id}>
-                {commentItem.commentedBy.firstname +
-                  ' ' +
-                  commentItem.commentedBy.lastname}{' '}
-                :{' '}
-                <Text style={{fontWeight: 'normal'}}>
-                  {commentItem.comment}
-                </Text>
+              <Text style={styleIn.comments}>
+                {item.commentedBy.firstname + ' ' + item.commentedBy.lastname}:{' '}
+                <Text style={{fontWeight: 'normal'}}>{item.comment}</Text>
               </Text>
             );
-          })} */}
+          })}
         </View>
-      {/* </ScrollView> */}
-{/* <Text>Ahahah </Text> */}
+      </ScrollView>
     </>
   );
 };
@@ -66,3 +68,24 @@ const styleIn = StyleSheet.create({
 });
 
 export default Comments;
+
+{
+  /* <ScrollView>
+        <View>
+          <Text style={styleIn.commentHeader}>Comments</Text>
+          {singlePostComments.comments.map((commentItem, id) => {
+            return (
+              <Text style={styleIn.comments} key={commentItem._id}>
+                {commentItem.commentedBy.firstname +
+                  ' ' +
+                  commentItem.commentedBy.lastname}{' '}
+                :{' '}
+                <Text style={{fontWeight: 'normal'}}>
+                  {commentItem.comment}
+                </Text>
+              </Text>
+            );
+          })}
+        </View>
+      </ScrollView> */
+}

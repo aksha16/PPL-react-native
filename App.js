@@ -11,9 +11,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import Timeline from './components/timeline';
 import axios from 'axios';
 import {userAction} from './redux/action';
+import SERVER_URL from '../config';
 
-import Forms from './components/form';
-import Form2 from './components/form2';
+
+// import Forms from './components/form';
+// import Form2 from './components/form2';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -37,11 +39,11 @@ const App = () => {
             console.log("App.js value of token",value);
             console.log("ohh that means till here things worked!!")
             axios
-              .post('http://192.168.43.57:3002/user/jwtverify', {token: value})
+              .post( SERVER_URL + 'user/jwtverify', {token: value})
               .then(res => {
                 console.log('jwtVerified kya', res);
                 console.log("achhhaaa aisa kya", res.data.payload);
-                if (true) {
+                if (res.data.payload) {
                   console.log("workingggggg ??????");
                   setSignedIn(true);
                   console.log("user signed is?", isSignedIn);
@@ -89,13 +91,12 @@ const App = () => {
           <Stack.Navigator
             screenOptions={{header: () => null}}
             initialRouteName="Login">
-            <Stack.Screen name="Login" component={Form2} />
+            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Registration" component={Registration} />
           </Stack.Navigator>
         )}
       </NavigationContainer>
     </>
-    // <Text>Yesss</Text>
   );
 };
 

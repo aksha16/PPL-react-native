@@ -12,6 +12,8 @@ import {
 import styles from '../styles';
 import {ScrollView, State} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
+import SERVER_URL from '../config';
+
 
 const Registration = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -53,7 +55,7 @@ const Registration = ({navigation}) => {
         lastname: lastname,
       };
       axios
-        .post('http://192.168.43.57:3002/user/registration', user)
+        .post( SERVER_URL + 'user/registration', user)
         .then(res => {
           console.log('server Registration response', res);
           if (res.data) {

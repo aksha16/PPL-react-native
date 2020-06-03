@@ -116,7 +116,7 @@ const Profile = ({navigation}) => {
 };
 
 const styleIn = StyleSheet.create({
-  drawerIcon:{display: 'flex', flexDirection: 'row'},
+  drawerIcon:{display: 'flex', flexDirection: 'row-reverse'},
   image:{width: 100, height: 100},
   name:{fontSize: 20, fontWeight: 'bold', color: '#f4511e'},
   bio:{

@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {userAction} from '../redux/action';
+import SERVER_URL from '../config';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ const Login = ({navigation}) => {
     if (email && password) {
       const userData = {email: email, password: password};
       console.log('userDattttaaa', userData);
-      axios.post('http://192.168.43.57:3002/user/login', userData).then(res => {
+      axios.post( SERVER_URL + 'user/login', userData).then(res => {
         console.log('res:', res);
         if (res.data.token) {
           console.log('user can log-in!!', res.data);
@@ -46,7 +47,7 @@ const Login = ({navigation}) => {
           const token = res.data.token;
 
           axios
-            .post('http://192.168.43.57:3002/user/jwtverify', {
+            .post( SERVER_URL + 'user/jwtverify', {
               token: token,
             })
             .then(res => {
@@ -71,7 +72,6 @@ const Login = ({navigation}) => {
         if (value) {
           console.log(value, 'vallllllllluuuuuueeeee');
           setToken(value);
-          //navigation.navigate('timeline');
         } else {
           setToken();
         }
@@ -87,7 +87,6 @@ const Login = ({navigation}) => {
 
   return (
     <ScrollView>
-      {/* {isLoading ? <ActivityIndicator size="large" color={'black'} /> : <></>} */}
       <View style={styles.container}>
         <View style={styles.login_sec}>
           <Image style={styleIn.image} source={require('../images/logo.png')} />

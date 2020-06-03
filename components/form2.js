@@ -11,17 +11,12 @@ import {
 import {useForm, Controller} from 'react-hook-form';
 import styles from '../styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import Config from 'react-native-config';
 
-// const validate = value => {
-//   const errors = {};
-//   const emailRe = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//   if (emailRe.test(email) === false) {
-//     error.email = 'Email address is invalid';
-//   }
-//   return errors;
-// };
+const URL = Config.SERVER_URL;
 
 export default function App() {
+  console.log("url", URL);
   const {register, setValue, handleSubmit, errors, control} = useForm();
   const onSubmit = data => Alert.alert('Form Data', JSON.stringify(data));
 
