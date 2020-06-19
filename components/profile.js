@@ -1,17 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  TextInput,
-  TouchableHighlight,
-  ActivityIndicator,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import {Text, View, Image, StyleSheet} from 'react-native';
 import {DrawerActions, NavigationContainer} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
 import styles from '../styles';
@@ -21,21 +10,24 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { NavigationActions } from 'react-navigation';
+import {NavigationActions} from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Profile = ({navigation}) => {
   const user = useSelector(state => state.userData);
-  console.log('profile.....', user,navigation);
+  console.log('profile.....', user, navigation);
 
   const handelLogout = () => {
     const clearAsyncStorage = async () => {
       AsyncStorage.clear();
     };
-    alert('Logging Out !!');
     clearAsyncStorage();
-    console.log("lets see", navigation);
-    navigation.navigate(NavigationActions.navigate({routeName:'Login'}));
-    
+    alert('Logging Out !!');
+
+    console.log('lets see', navigation);
+    // navigation.navigate(NavigationActions.navigate({routeName:'Login'}));
   };
 
   const CustomDrawerContent = props => {
@@ -65,67 +57,55 @@ const Profile = ({navigation}) => {
     return (
       <Drawer.Navigator
         drawerContent={props => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="GoBack" component={DrawerIcon}  />
+        <Drawer.Screen name="GoBack" component={DrawerIcon} />
       </Drawer.Navigator>
     );
   };
 
   return (
     <>
-      <View style={{flex: 1}}>
-        <NavigationContainer independent={true}>
-          <MyDrawer />
-        </NavigationContainer>
-
-        <View style={{alignItems: 'center'}}>
-          <Image
+      <ScrollView>
+        <View style={{flex: 1}}>
+          <View style={{alignItems: 'center', resizeMode: 'contain'}}>
+            {/* <Image
             style={styleIn.image}
-            source={require('../images/img_6.png')}
-          />
-        </View>
-        <View style={styles.profile}>
-          <View>
+            source={require('../images/img_6.png')} /> */}
+            <Ionicons name="md-person" color="#f4511e" size={100} />
+          </View>
+          <View style={styles.profile}>
             <View>
-              <Text
-                style={styleIn.name}>
-                FirstName : {user.userData.firstname}
-              </Text>
-              <Text
-                style={styleIn.name}>
-                LastName : {user.userData.lastname}
-              </Text>
-            </View>
-            <View>
-              <Text
-                style={styleIn.bio}>
-                Bio :
-              </Text>
-            </View>
-            <View>
-              <Text>
-                This is an example of a description. You can create as many
-                comments like this one or sub comments as you like and manage
-                all of your content inside Account.
-              </Text>
+              <View>
+                <Text style={styleIn.name}>
+                  FirstName : {user.userData.firstname}
+                </Text>
+                <Text style={styleIn.name}>
+                  LastName : {user.userData.lastname}
+                </Text>
+              </View>
+              <View>
+                <Text style={styleIn.bio}>Bio :</Text>
+              </View>
+              <View>
+                <Text>I'm a Developer.</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
 
 const styleIn = StyleSheet.create({
-  drawerIcon:{display: 'flex', flexDirection: 'row-reverse'},
-  image:{width: 100, height: 100},
-  name:{fontSize: 20, fontWeight: 'bold', color: '#f4511e'},
-  bio:{
+  drawerIcon: {display: 'flex', flexDirection: 'row-reverse'},
+  image: {width: 100, height: 100},
+  name: {fontSize: 20, fontWeight: 'bold', color: '#f4511e'},
+  bio: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#f4511e',
     fontStyle: 'italic',
-  }
-
+  },
 });
 
 export default Profile;

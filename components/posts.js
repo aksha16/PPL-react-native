@@ -6,10 +6,10 @@ import {
   Button,
   TextInput,
   TouchableHighlight,
-  ActivityIndicator,
   StyleSheet,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
@@ -18,22 +18,25 @@ import styles from '../styles';
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round((dimensions.width * 12) / 16);
 const imageWidth = dimensions.width - 2;
+import SERVER_URL from '../config';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Posts = ({navigation}) => {
   const [pics, setPics] = useState([]);
-  const [picsCopy, setPicsCopy] = useState([]);
-  const picsrc = '/home/com122/Desktop/ppl/clientSide/public/uploadPics/';
-  const a = [1, 2, 3, 4, 5, 6, 7];
+  const [hide, setHide] = useState(false);
+  const [filter, setFilter] = useState(false);
 
   const user = useSelector(state => state.userData);
   const [comment, setComment] = useState('');
   const [addComment, setAddComment] = useState({id: ''});
 
   useEffect(() => {
-    axios.post('http://192.168.43.57:3002/post/showpost').then(res => {
+    axios.post(SERVER_URL + 'post/showpost').then(res => {
       console.log('server dataaaaaa: ', res.data);
       setPics(res.data);
-      setPicsCopy(res.data);
       console.log('dekhte hai ..', pics);
     });
     console.log('uploaded pictures has been come to Home.....');
@@ -49,14 +52,14 @@ const Posts = ({navigation}) => {
     console.log('index:', index, pics[index]);
     let oldpics = [...pics];
     axios
-      .post('http://192.168.43.57:3002/post/likes', {
+      .post(SERVER_URL + 'post/likes', {
         _id: id,
         email: user.userData.email,
       })
       .then(res => {
         if (res.data.nModified === 1) {
           console.log('likes added !! ', res);
-          oldpics[index].likedBy.push('1');
+          oldpics[index].likedBy.push(user.userData.email);
           setPics(oldpics);
 
           console.log('likes changed :', pics[index].likedBy);
@@ -73,7 +76,7 @@ const Posts = ({navigation}) => {
       let index = pics.findIndex(x => x._id === id);
       console.log('index:', index, pics[index].comments);
       axios
-        .post('http://192.168.43.57:3002/post/singlePost/addComments', {
+        .post(SERVER_URL + 'post/singlePost/addComments', {
           _id: id,
           comment: comment,
           commentedBy: user.userData._id,
@@ -91,11 +94,92 @@ const Posts = ({navigation}) => {
       alert('Please write your comment!');
     }
   };
+
+  const handleChange = e => {
+    setHide(false);
+    setFilter(true);
+    axios
+      .post(SERVER_URL + 'post/sort', {text: e})
+      .then(res => {
+        setPics(res.data);
+      })
+      .catch(error => {
+        console.log('errors', error);
+        throw error;
+      });
+  };
+
+  const handleDissmisFilter = () => {
+    setFilter(false);
+    axios.post(SERVER_URL + 'post/showpost').then(res => {
+      setPics(res.data);
+    });
+  };
+
   return (
     <>
       <ScrollView>
+        <View>
+          <Icon.Button
+            name="filter"
+            backgroundColor="#ffa21d"
+            onPress={() => (hide ? setHide(false) : setHide(true))}>
+            Filter Post
+          </Icon.Button>
+        </View>
+        <View>
+          {hide && (
+            <View style={styles.filterPost}>
+              <TouchableHighlight onPress={() => handleChange('latestFirst')}>
+                <View style={{padding: 10, fontSize: 20, borderBottomWidth: 1}}>
+                  <Text>Latest First</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => handleChange('oldestFirst')}>
+                <View style={{padding: 10, fontSize: 20, borderBottomWidth: 1}}>
+                  <Text>Oldest First</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => handleChange('mostLiked')}>
+                <View style={{padding: 10, fontSize: 20, borderBottomWidth: 1}}>
+                  <Text>Most Liked</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => handleChange('mostCommented')}>
+                <View style={{padding: 10, fontSize: 20}}>
+                  <Text>Most Commented</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          )}
+        </View>
+
+        {filter && (
+          <View>
+            <Text style={styleIn.commentHeader}>Filter</Text>
+            <View style={styleIn.filters}>
+              <View>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Latest first</Text>
+                </View>
+              </View>
+              <View>
+                <TouchableHighlight onPress={handleDissmisFilter}>
+                  <View style={styles.button}>
+                    <Text style={styles.buttonText}>
+                      Dismiss filter
+                      <Entypo name="cross" size={15} />
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        )}
+
         <View style={styles.container}>
           {pics.map((data, id) => {
+            const {postedBy: {firstname = '', lastname = ''} = {}} = data;
             return (
               <View style={styles.post} key={id}>
                 <View style={styles.postHeader}>
@@ -112,9 +196,7 @@ const Posts = ({navigation}) => {
                       <View>
                         <Text style={styleIn.name}>
                           {' '}
-                          {data.postedBy.firstname +
-                            ' ' +
-                            data.postedBy.lastname}
+                          {firstname + ' ' + lastname}
                         </Text>
                       </View>
                     </View>
@@ -127,7 +209,10 @@ const Posts = ({navigation}) => {
                       <Text style={styleIn.category}>{data.category}</Text>
                     </View>
                     <View>
-                      <Text>{data.date}</Text>
+                      <Text>
+                        {data.date ? data.date.slice(0, 10) : ''}{' '}
+                        {data.date ? data.date.slice(11, 19) : ''}{' '}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -142,28 +227,31 @@ const Posts = ({navigation}) => {
 
                 <View>
                   <View style={styles.postHeader}>
-                    <TouchableHighlight
-                      onPress={() => {
-                        handleLikes(data._id);
-                      }}>
-                      <View style={styles.postIcon}>
+                    <View style={styles.postIcon}>
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={{color: 'white'}}>
+                          {' '}
+                          {data.likedBy.length} Likes{' '}
+                        </Text>
                         <View>
-                          <Image
-                            style={styleIn.postIcon}
-                            source={{
-                              uri:
-                                'http://192.168.43.248:9000/images/icon_003.png',
-                            }}
-                          />
-                        </View>
-                        <View>
-                          <Text style={{color: 'white'}}>
-                            {' '}
-                            {data.likedBy.length} Likes
-                          </Text>
+                          <TouchableOpacity
+                            onPress={() => {
+                              handleLikes(data._id);
+                            }}>
+                            <Ionicons
+                              name="ios-thumbs-up"
+                              size={20}
+                              color={
+                                data.likedBy.includes(user.userData.email)
+                                  ? 'orange'
+                                  : 'white'
+                              }
+                            />
+                          </TouchableOpacity>
                         </View>
                       </View>
-                    </TouchableHighlight>
+                    </View>
+
                     <TouchableHighlight
                       onPress={() => showAddComment(data._id)}>
                       <View style={styles.postIcon}>
@@ -180,6 +268,7 @@ const Posts = ({navigation}) => {
                           <Text style={{color: 'white'}}>
                             {' '}
                             {data.comments.length} Comments{' '}
+                            <FontAwesome name="comment" size={20} />
                           </Text>
                         </View>
                       </View>
@@ -189,23 +278,25 @@ const Posts = ({navigation}) => {
                     <Text style={styleIn.commentHeader}>Comments</Text>
                     {data.comments.slice(0, 2).map((commentItem, id) => {
                       return (
-                        <Text style={styleIn.comments} key={commentItem._id}>
-                          {commentItem.commentedBy.firstname +
-                            ' ' +
-                            commentItem.commentedBy.lastname}{' '}
-                          :{' '}
-                          <Text style={{fontWeight: 'normal'}}>
-                            {commentItem.comment}
+                        <View style={styleIn.showComment} key={commentItem._id}>
+                          <Text style={styleIn.comments} key={commentItem._id}>
+                            {commentItem.commentedBy.firstname +
+                              ' ' +
+                              commentItem.commentedBy.lastname}{' '}
+                            :{' '}
+                            <Text style={{fontWeight: 'normal'}}>
+                              {commentItem.comment}
+                            </Text>
                           </Text>
-                        </Text>
+                        </View>
                       );
                     })}
                     {data.comments.length > 0 ? (
-                      <View>
+                      <View style={styleIn.showComment}>
                         <Text
                           style={{color: 'blue'}}
                           onPress={() => {
-                            navigation.navigate('comments', {_id:data._id});
+                            navigation.navigate('comments', {_id: data._id});
                             console.log('clicked???');
                           }}>
                           View all {data.comments.length} comments
@@ -269,6 +360,15 @@ const styleIn = StyleSheet.create({
   handleComment: {
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  filters: {flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'},
+  showComment: {
+    // marginTop: 16,
+    // paddingVertical: 8,
+    paddingLeft: 6,
+    // borderColor: "grey",
+    // borderBottomWidth:2,
+    // color: "#20232a",
   },
 });
 

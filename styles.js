@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import { white } from 'color-name';
+import {white} from 'color-name';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -39,13 +39,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   textInput: {
-    alignSelf:'center',
+    alignSelf: 'center',
     padding: 10,
     margin: 10,
     fontSize: 20,
-    width: '90%',
+    width: '80%',
+    // maxWidth:'80%',
+    height:40,
     borderWidth: 1,
-    backgroundColor: 'azure',
+    backgroundColor: '#ffffff',
   },
   login_sec: {
     width: '90%',
@@ -64,9 +66,9 @@ const styles = StyleSheet.create({
   },
   post: {
     margin: 10,
-    borderTopWidth:2,
+    borderTopWidth: 2,
     borderTopColor: '#f4511e',
-    zIndex:0
+    zIndex: 0,
   },
   postHeader: {
     padding: 10,
@@ -82,18 +84,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#f4511e',
   },
-  Comment:{
+  Comment: {
     backgroundColor: 'azure',
-    margin:8,
-    padding:4
+    margin: 8,
+    padding: 4,
   },
-  Comment2:{
-    flexDirection:'row'
+  Comment2: {
+    flexDirection: 'row',
   },
-  DropDownMenu:{
-    flex:1,
+  DropDownMenu: {
+    flex: 1,
   },
-  mainWord:{
+  mainWord: {
     fontSize: 30,
     color: '#f4511e',
     alignSelf: 'center',
@@ -101,21 +103,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#f4511e',
   },
-  autoSuggestion:{
+  autoSuggestion: {
     alignSelf: 'center',
     width: '90%',
     position: 'absolute',
     backgroundColor: '#d1d5da',
-    top:-10,
+    top: -10,
     zIndex: 1,
     padding: 5,
   },
-  filterPost:{
-    alignSelf: "flex-end",
+  filterPost: {
+    alignSelf: 'flex-end',
     width: '30%',
     position: 'absolute',
     backgroundColor: '#d1d5da',
-    top:-5,
+    top: -5,
     zIndex: 1,
     padding: 5,
   },
@@ -126,8 +128,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
-  text:{
-    color:'#f4511e',
-  }
+  text: {
+    color: '#f4511e',
+  },
 });
 export default styles;

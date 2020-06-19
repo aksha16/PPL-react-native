@@ -45,10 +45,12 @@ if(ifLoading){
           <Text style={styleIn.commentHeader}>Comments</Text>
           {singlePostComments.comments.map((item, id) => {
             return (
-              <Text style={styleIn.comments}>
-                {item.commentedBy.firstname + ' ' + item.commentedBy.lastname}:{' '}
+              <View style={styleIn.showComment} key={item._id}>
+              <Text style={styleIn.comments} key={item._id}>
+                {item.commentedBy.firstname + ' ' + item.commentedBy.lastname}{' '} :{'  '}
                 <Text style={{fontWeight: 'normal'}}>{item.comment}</Text>
               </Text>
+              </View>
             );
           })}
         </View>
@@ -65,27 +67,16 @@ const styleIn = StyleSheet.create({
     fontWeight: 'bold',
   },
   comments: {fontWeight: 'bold', fontSize: 15},
+  showComment: {
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingLeft:6,
+    borderColor: "grey",
+    borderBottomWidth:StyleSheet.hairlineWidth,
+    color: "#20232a",
+  }
 });
 
 export default Comments;
 
-{
-  /* <ScrollView>
-        <View>
-          <Text style={styleIn.commentHeader}>Comments</Text>
-          {singlePostComments.comments.map((commentItem, id) => {
-            return (
-              <Text style={styleIn.comments} key={commentItem._id}>
-                {commentItem.commentedBy.firstname +
-                  ' ' +
-                  commentItem.commentedBy.lastname}{' '}
-                :{' '}
-                <Text style={{fontWeight: 'normal'}}>
-                  {commentItem.comment}
-                </Text>
-              </Text>
-            );
-          })}
-        </View>
-      </ScrollView> */
-}
+

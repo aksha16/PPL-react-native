@@ -30,8 +30,8 @@ const Login = ({navigation}) => {
   const handleLogin = () => {
     if (email && password) {
       const userData = {email: email, password: password};
-      console.log('userDattttaaa', userData);
-      axios.post( SERVER_URL + 'user/login', userData).then(res => {
+      console.log('userDattttaaa', userData, typeof(SERVER_URL+"haha"));
+      axios.post( `${SERVER_URL}user/login`, userData).then(res => {
         console.log('res:', res);
         if (res.data.token) {
           console.log('user can log-in!!', res.data);
