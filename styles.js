@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  postLeft: {},
+  postLeft: {justifyContent:'space-between'},
   postRight: {
     alignItems: 'flex-end',
   },

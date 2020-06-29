@@ -189,7 +189,7 @@ const Posts = ({navigation}) => {
                         <Image
                           style={styleIn.postIcon}
                           source={{
-                            uri: 'http://192.168.43.57:3002/images/img_6.png',
+                            uri: SERVER_URL +'images/img_6.png',
                           }}
                         />
                       </View>
@@ -200,9 +200,9 @@ const Posts = ({navigation}) => {
                         </Text>
                       </View>
                     </View>
-                    <View>
+                  
                       <Text style={styleIn.caption}>{data.caption}</Text>
-                    </View>
+                    
                   </View>
                   <View style={styles.postRight}>
                     <View>
@@ -220,7 +220,7 @@ const Posts = ({navigation}) => {
                   <Image
                     style={styleIn.image}
                     source={{
-                      uri: `http://192.168.43.57:3002/uploadPics/${data.image}`,
+                      uri:  SERVER_URL +`uploadPics/${data.image}`,
                     }}
                   />
                 </View>
@@ -255,15 +255,7 @@ const Posts = ({navigation}) => {
                     <TouchableHighlight
                       onPress={() => showAddComment(data._id)}>
                       <View style={styles.postIcon}>
-                        <View>
-                          <Image
-                            style={styleIn.postIcon}
-                            source={{
-                              uri:
-                                'http://192.168.43.248:9000/images/icon_004.png',
-                            }}
-                          />
-                        </View>
+                       
                         <View>
                           <Text style={{color: 'white'}}>
                             {' '}
@@ -342,8 +334,8 @@ const Posts = ({navigation}) => {
 
 const styleIn = StyleSheet.create({
   postIcon: {width: 20, height: 20},
-  name: {color: 'white', paddingHorizontal: 10},
-  caption: {fontSize: 20, color: '#f4511e'},
+  name: {color: 'white', paddingHorizontal: 10, fontSize:15},
+  caption: {color: 'black'},
   category: {
     fontSize: 20,
     backgroundColor: '#f4511e',

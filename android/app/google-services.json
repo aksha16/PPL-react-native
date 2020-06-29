@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "216011247846",
+    "firebase_url": "https://pplnative.firebaseio.com",
+    "project_id": "pplnative",
+    "storage_bucket": "pplnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216011247846:android:fd6f90ad2ff2afa0b52b27",
+        "android_client_info": {
+          "package_name": "com.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216011247846-fl5g5c9vqpqle6e2g96hf6l5g2h5l63t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcxLxEHvcYrv0lldIRxGj-df6R0YWKgQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216011247846-fl5g5c9vqpqle6e2g96hf6l5g2h5l63t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

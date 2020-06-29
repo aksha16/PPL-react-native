@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Button,
+  Alert,
 } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -20,14 +21,14 @@ import axios from 'axios';
 import {userAction} from './redux/action';
 import SERVER_URL from './config';
 const Stack = createStackNavigator();
-import Icon from 'react-native-vector-icons/FontAwesome';
+import messaging from '@react-native-firebase/messaging';
 
 const App = ({navigation,route }) => {
   // const clearAsyncStorage = async () => {
   //   AsyncStorage.clear();
   // };
   // clearAsyncStorage();
-  
+
   console.log('123456789sdfghjxcvbn=====', navigation, route);
   const dispatch = useDispatch();
   const [isSignedIn, setSignedIn] = useState(false);
@@ -35,6 +36,30 @@ const App = ({navigation,route }) => {
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.userData);
   console.log('userrrr data has arrived yet or not', user, "let's see...");
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    console.log("firebasse", unsubscribe);
+
+
+    messaging()
+      .getToken()
+      .then(fcmToken => {
+        if (fcmToken) {
+          // user has a device token
+          alert(fcmToken);
+          console.log("firebase token", fcmToken);
+        } else {
+          alert('no');
+          // user doesn't have a device token yet
+        }
+      })
+      .catch(error => console.log('err', error));
+
+  }, []);
 
   useEffect(() => {
     const tokenVerify = async () => {
@@ -80,25 +105,6 @@ const App = ({navigation,route }) => {
           <Stack.Navigator  screenOptions={{header: () => null}}>
             <Stack.Screen
               name="timeline"
-              // options={{
-              //   title: 'PPL',
-              //   headerStyle: {backgroundColor: '#f4511e'},
-              //   headerTintColor: '#fff',
-              //   headerTitleStyle: {
-              //     fontWeight: 'bold',
-              //     alignSelf: 'center',
-              //   },
-              //   headerRight: () => (
-              //     <Icon.Button
-              //       name="reorder"
-              //       backgroundColor="#f4511e"
-              //       onPress={() =>
-              //         alert("hia")
-              //         //navigation.dispatch(DrawerActions.openDrawer())
-              //       }
-              //     />
-              //   ),
-              // }}
               component={Timeline}
             />
           </Stack.Navigator>
@@ -112,8 +118,45 @@ const App = ({navigation,route }) => {
         )}
       </NavigationContainer>
     </>
-  );
+   );
 };
+
+// import messaging from '@react-native-firebase/messaging';
+// function App() {
+//   useEffect(() => {
+//     console.log('worked?');
+//     const unsubscribe = messaging().onMessage(remoteMessage => {
+//       console.log('hjai', JSON.stringify(remoteMessage));
+//       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+//     });
+//     console.log('wored', unsubscribe());
+//     messaging()
+//       .hasPermission()
+//       .then(enabled => {
+//         if (enabled) {
+//           alert('Yes');
+//         } else {
+//           alert('No');
+//         }
+//       });
+
+//     // messaging()
+//     //   .getToken()
+//     //   .then(fcmToken => {
+//     //     if (fcmToken) {
+//     //       // user has a device token
+//     //       alert(fcmToken);
+//     //     } else {
+//     //       alert('no');
+//     //       // user doesn't have a device token yet
+//     //     }
+//     //   })
+//     //   .catch(error => console.log('err', error));
+
+//     return unsubscribe;
+//   }, []);
+//   return <Text>Yes.</Text>;
+// }
 
 const styleIn = StyleSheet.create({
   activity: {
