@@ -6,17 +6,17 @@ import {
   Button,
   TextInput,
   TouchableHighlight,
-  ActivityIndicator,
   StyleSheet,
   ScrollView,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import styles from '../styles';
-import DropDownPicker from 'react-native-dropdown-picker';
 import axios from 'axios';
 import SERVER_URL from '../config';
 import {useSelector} from 'react-redux';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+import DropDownPicker from 'react-native-dropdown-picker'
+
 
 const Upload = ({navigation}) => {
   const [photo, setPhoto] = useState([]);
@@ -53,7 +53,7 @@ const Upload = ({navigation}) => {
 
   const handleUploadpost = e => {
     e.preventDefault();
-    if (true) {
+    if (caption && category && photo) {
       const imageData = {
         name: photo.fileName,
         type: photo.type,
@@ -63,7 +63,7 @@ const Upload = ({navigation}) => {
             : photo.uri.replace('file://', ''),
       };
       const formData = new FormData();
-      formData.append('image', {name: 'jkail'});
+      formData.append('image', imageData);
       formData.append('caption', caption);
       formData.append('category', category);
       formData.append('postedBy', id);
@@ -78,9 +78,9 @@ const Upload = ({navigation}) => {
         .post(SERVER_URL + 'post/upload', formData)
         .then(res => {
           console.log('resUploadData', res.data);
-          // setCaption('');
-          // setCategory('');
-          // setPhoto([]);
+          setCaption('');
+          setCategory('');
+          setPhoto([]);
         })
         .catch(error => {
           console.log(
@@ -88,7 +88,7 @@ const Upload = ({navigation}) => {
               error.message,
             error,
           );
-          //throw error;
+          throw error;
         });
       //alert('Upload is done');
       //navigation.navigate('Home');
@@ -98,28 +98,24 @@ const Upload = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={{width:'100%', alignItems:'center'}}>
+        <View style={{width: '100%', alignItems: 'center'}}>
           <Text style={styles.mainWord}>UploadPost </Text>
           <Text> </Text>
           <Text style={styles.text}>Category {'\n'}</Text>
+
           <DropDownPicker
             items={allCategory}
-            placeholder="Select a category"
-            containerStyle={{
-              height: 40,
-              borderWidth: 1,
-              width:'80%',
-              zIndex:999,
-              // position:'fixed'
-              // margin: 10,
-              // padding: 10,
-            }}
+            defaultValue={null}
+            containerStyle={{height: 40}}
+            style={{backgroundColor: 'white', width: '80%'}}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
             onChangeItem={item => setCategory(item.value)}
             value={category}
           />
-          <Text>{' '}</Text>
+
+          <Text> </Text>
           <Text style={styles.text}>Caption</Text>
-         
+
           <TextInput
             style={styles.textInput}
             placeholder="write your caption here..."
@@ -129,26 +125,26 @@ const Upload = ({navigation}) => {
             }}
             value={caption}
           />
-       
+
           {photo.uri && (
             <Image source={{uri: photo.uri}} style={styleIn.uploadImage} />
           )}
           <Text> </Text>
           <View>
-            <TouchableOpacity onPress={handleChoosePhoto}>
+            <TouchableNativeFeedback onPress={handleChoosePhoto}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Choose Photo</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
           </View>
         </View>
         <Text> </Text>
         <View>
-          <TouchableHighlight onPress={handleUploadpost}>
+          <TouchableNativeFeedback onPress={handleUploadpost}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Upload Picture</Text>
             </View>
-          </TouchableHighlight>
+          </TouchableNativeFeedback>
         </View>
       </View>
     </ScrollView>

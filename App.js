@@ -29,10 +29,9 @@ const App = ({navigation,route }) => {
   // };
   // clearAsyncStorage();
 
-  console.log('123456789sdfghjxcvbn=====', navigation, route);
+  
   const dispatch = useDispatch();
   const [isSignedIn, setSignedIn] = useState(false);
-  const [token, setToken] = useState();
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.userData);
   console.log('userrrr data has arrived yet or not', user, "let's see...");
@@ -41,16 +40,13 @@ const App = ({navigation,route }) => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
-
     console.log("firebasse", unsubscribe);
-
-
     messaging()
       .getToken()
       .then(fcmToken => {
         if (fcmToken) {
           // user has a device token
-          alert(fcmToken);
+          //alert(fcmToken);
           console.log("firebase token", fcmToken);
         } else {
           alert('no');
@@ -76,13 +72,16 @@ const App = ({navigation,route }) => {
                 if (res.data.payload) {
                   console.log('workingggggg ??????');
                   setSignedIn(true);
+                 
                   console.log('user signed is?', isSignedIn);
-                  dispatch(userAction(res.data.payload));
+                   dispatch(userAction(res.data.payload));
                   console.log('worked.............');
+                  setLoading(false);
                 } else console.log('Not any payload....');
               });
           } else {
             console.log('async storage got nothing..........');
+            setLoading(false);
             setSignedIn(false);
           }
         });
@@ -93,7 +92,7 @@ const App = ({navigation,route }) => {
     tokenVerify();
   }, []);
 
-  if (!isSignedIn && AsyncStorage.getItem('token') != undefined) {
+  if (user == undefined && loading) {
     return <ActivityIndicator size="large" style={styleIn.activity} />;
   }
 
@@ -101,7 +100,7 @@ const App = ({navigation,route }) => {
     <>
       <NavigationContainer>
         {console.log('isSignedIn', isSignedIn)}
-        {isSignedIn ? (
+        {user != undefined ? (
           <Stack.Navigator  screenOptions={{header: () => null}}>
             <Stack.Screen
               name="timeline"
@@ -120,43 +119,6 @@ const App = ({navigation,route }) => {
     </>
    );
 };
-
-// import messaging from '@react-native-firebase/messaging';
-// function App() {
-//   useEffect(() => {
-//     console.log('worked?');
-//     const unsubscribe = messaging().onMessage(remoteMessage => {
-//       console.log('hjai', JSON.stringify(remoteMessage));
-//       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-//     });
-//     console.log('wored', unsubscribe());
-//     messaging()
-//       .hasPermission()
-//       .then(enabled => {
-//         if (enabled) {
-//           alert('Yes');
-//         } else {
-//           alert('No');
-//         }
-//       });
-
-//     // messaging()
-//     //   .getToken()
-//     //   .then(fcmToken => {
-//     //     if (fcmToken) {
-//     //       // user has a device token
-//     //       alert(fcmToken);
-//     //     } else {
-//     //       alert('no');
-//     //       // user doesn't have a device token yet
-//     //     }
-//     //   })
-//     //   .catch(error => console.log('err', error));
-
-//     return unsubscribe;
-//   }, []);
-//   return <Text>Yes.</Text>;
-// }
 
 const styleIn = StyleSheet.create({
   activity: {

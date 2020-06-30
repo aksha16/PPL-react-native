@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: '80%',
     // maxWidth:'80%',
     height:40,
-    borderWidth: 1,
+    //borderWidth: 1,
     backgroundColor: '#ffffff',
   },
   login_sec: {

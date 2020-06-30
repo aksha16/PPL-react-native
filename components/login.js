@@ -11,7 +11,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import styles from '../styles';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableNativeFeedback} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -116,23 +116,23 @@ const Login = ({navigation}) => {
         </View>
         <View style={styleIn.buttons}>
           <View>
-            <TouchableHighlight onPress={handleLogin} underlayColor="white">
+            <TouchableNativeFeedback onPress={handleLogin} underlayColor="white">
               <View style={styles.button}>
                 <Text style={styles.buttonText}>LogIn</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View style={styleIn.button}>
             <View>
               <Text>Do not have Account</Text>
             </View>
             <View>
-              <TouchableHighlight
+              <TouchableNativeFeedback
                 onPress={() => navigation.navigate('Registration')}>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}>Register First</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableNativeFeedback>
             </View>
           </View>
         </View>

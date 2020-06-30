@@ -10,7 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import styles from '../styles';
-import {ScrollView, State} from 'react-native-gesture-handler';
+import {ScrollView, State, TouchableNativeFeedback} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import SERVER_URL from '../config';
 
@@ -158,11 +158,11 @@ const Registration = ({navigation}) => {
           <View>
             <View
               style={styleIn.button}>
-              <TouchableHighlight onPress={() => navigation.navigate('Login')}>
+              <TouchableNativeFeedback onPress={() => navigation.navigate('Login')}>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}>GoToLogin</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableNativeFeedback>
               <Text>Already have a account</Text>
             </View>
           </View>
