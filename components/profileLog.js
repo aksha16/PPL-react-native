@@ -16,9 +16,9 @@ import { userAction } from '../redux/action';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const dispatch = useDispatch();
 
 export default ProfileLog = ({navigation}) => {
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     const clearAsyncStorage = async () => {

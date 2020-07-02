@@ -7,7 +7,7 @@ import Upload from './upload';
 import Home from './home';
 import ProfileLog from './profileLog';
 import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Comments from './comments';
 import Posts from './posts';
 
@@ -29,6 +29,15 @@ const Timeline = ({navigation, route}) => {
                   fontWeight: 'bold',
                   alignSelf:'center',
                 },
+                headerRight: () => (
+                  <Icon.Button
+                    name="paper-plane"
+                    backgroundColor="#f4511e"
+                    // onPress={() => {
+                    //   navigation.toggleDrawer();
+                    // }}
+                  />
+                ),
                }}
         />
          <Stack.Screen name="comments" component={Comments} 
