@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import styles from '../styles';
+import styles from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
 import Config from 'react-native-config';
 

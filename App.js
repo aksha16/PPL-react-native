@@ -1,14 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-  Button,
-  Alert,
-} from 'react-native';
+import {StyleSheet, ActivityIndicator, Alert} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -16,20 +8,19 @@ import Registration from './components/registration';
 import Login from './components/login';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
-import Timeline from './components/timeline';
+import AllNavigation from './Navigations/allNavigation';
 import axios from 'axios';
 import {userAction} from './redux/action';
 import SERVER_URL from './config';
 const Stack = createStackNavigator();
 import messaging from '@react-native-firebase/messaging';
 
-const App = ({navigation,route }) => {
+const App = ({navigation, route}) => {
   // const clearAsyncStorage = async () => {
   //   AsyncStorage.clear();
   // };
   // clearAsyncStorage();
 
-  
   const dispatch = useDispatch();
   const [isSignedIn, setSignedIn] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -40,21 +31,20 @@ const App = ({navigation,route }) => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
-    console.log("firebasse", unsubscribe);
+    console.log('firebasse', unsubscribe);
     messaging()
       .getToken()
       .then(fcmToken => {
         if (fcmToken) {
           // user has a device token
           //alert(fcmToken);
-          console.log("firebase token", fcmToken);
+          console.log('firebase token', fcmToken);
         } else {
           alert('no');
           // user doesn't have a device token yet
         }
       })
       .catch(error => console.log('err', error));
-
   }, []);
 
   useEffect(() => {
@@ -72,9 +62,9 @@ const App = ({navigation,route }) => {
                 if (res.data.payload) {
                   console.log('workingggggg ??????');
                   setSignedIn(true);
-                 
+
                   console.log('user signed is?', isSignedIn);
-                   dispatch(userAction(res.data.payload));
+                  dispatch(userAction(res.data.payload));
                   console.log('worked.............');
                   setLoading(false);
                 } else console.log('Not any payload....');
@@ -101,11 +91,8 @@ const App = ({navigation,route }) => {
       <NavigationContainer>
         {console.log('isSignedIn', isSignedIn)}
         {user != undefined ? (
-          <Stack.Navigator  screenOptions={{header: () => null}}>
-            <Stack.Screen
-              name="timeline"
-              component={Timeline}
-            />
+          <Stack.Navigator screenOptions={{header: () => null}}>
+            <Stack.Screen name="timeline" component={AllNavigation} />
           </Stack.Navigator>
         ) : (
           <Stack.Navigator
@@ -117,7 +104,7 @@ const App = ({navigation,route }) => {
         )}
       </NavigationContainer>
     </>
-   );
+  );
 };
 
 const styleIn = StyleSheet.create({

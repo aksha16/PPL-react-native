@@ -17,7 +17,7 @@ const Comments = ({route, navigation}) => {
   const {_id} = route.params;
   const [singlePostComments, setSinglePostComments] = useState({});
   const [ifLoading, setIfLoading] = useState(true);
-  console.log('=======>>>>>>>>>>> it came here////');
+  console.log('=======>>>>>>>>>>> it(comment) came here////');
 
   useEffect(() => {
     console.log('problem is here???');

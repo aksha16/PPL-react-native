@@ -51,8 +51,7 @@ const Upload = ({navigation}) => {
     });
   };
 
-  const handleUploadpost = e => {
-    e.preventDefault();
+  const handleUploadpost = () => {
     if (caption && category && photo) {
       const imageData = {
         name: photo.fileName,
