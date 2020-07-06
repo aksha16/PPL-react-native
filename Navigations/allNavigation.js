@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProfileLog from '../components/profileLog';
+import ProfileLogNavigation from './profileLogNavigation';
 import UploadNavigation from './uploadNavigation';
 import TimelineNavigation from './timelineNavigation';
 
@@ -33,7 +33,7 @@ const AllNavigation = ({navigation, route}) => {
       headerTitle="haikahukkkkk">
       <Tab.Screen name="Home" component={TimelineNavigation} />
       <Tab.Screen name="Upload" component={UploadNavigation} />
-      <Tab.Screen name="Profile" component={ProfileLog} />
+      <Tab.Screen name="Profile" component={ProfileLogNavigation} />
     </Tab.Navigator>
   );
 };

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Button, View} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -9,7 +8,7 @@ import {
 import {DrawerActions, NavigationAction} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Profile from './profile';
+import Profile from '../components/profile';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useDispatch} from 'react-redux';
 import { userAction } from '../redux/action';
@@ -17,7 +16,36 @@ import { userAction } from '../redux/action';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-export default ProfileLog = ({navigation}) => {
+const MyProfileStack = ({navigation}) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'PPL',
+          headerStyle: {backgroundColor: '#f4511e'},
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignSelf: 'center',
+          },
+          headerRight: () => (
+            <Icon.Button
+              name="reorder"
+              backgroundColor="#f4511e"
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+      </Stack.Navigator>
+  );
+};
+
+export default ProfileLogNavigation = ({navigation}) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -26,7 +54,7 @@ export default ProfileLog = ({navigation}) => {
     };
     clearAsyncStorage();
     navigation.dispatch(DrawerActions.closeDrawer());
-    dispatch(userAction(null));
+   // dispatch(userAction(null));
 
     alert('Logging Out !!');
    
@@ -41,36 +69,7 @@ export default ProfileLog = ({navigation}) => {
         <DrawerItem label="Log Out" onPress={handleLogout} />
       </DrawerContentScrollView>
     );
-  };
-
-  const MyProfileStack = ({navigation}) => {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            title: 'PPL',
-            headerStyle: {backgroundColor: '#f4511e'},
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              alignSelf: 'center',
-            },
-            headerRight: () => (
-              <Icon.Button
-                name="reorder"
-                backgroundColor="#f4511e"
-                onPress={() => {
-                  navigation.toggleDrawer();
-                }}
-              />
-            ),
-          }}
-        />
-        </Stack.Navigator>
-    );
-  };
+  }; 
 
   return (
     <Drawer.Navigator
